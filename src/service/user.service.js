@@ -5,12 +5,11 @@ class UserService {
   // User registration in db
   register = async (user) => {
     try {
-      const { fullName, email, username, password } = user;
-      const newUser = await new userModel({ email, username, fullName, password });
+      const { email, password, location = "" } = user;
+      const newUser = await new User({ email, password, location });
       const result = await newUser.save();
       return result;
     } catch (error) {
-      // throw error;
       res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error", error, });
     }
   };
